@@ -51,4 +51,11 @@ public class ApiIrcubeSrc {
 
        return profile;
    }
+    @ApiMethod( name = "login",path = "login", httpMethod = ApiMethod.HttpMethod.POST)
+    public Profile login ( final User user,  ProfileForm profileForm ) throws UnauthorizedException {
+        return new Profile("id", "id","id");
+    }
+
+
+
 }
