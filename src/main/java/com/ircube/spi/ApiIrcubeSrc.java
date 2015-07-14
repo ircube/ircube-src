@@ -52,10 +52,48 @@ public class ApiIrcubeSrc {
        return profile;
    }
     @ApiMethod( name = "login",path = "login", httpMethod = ApiMethod.HttpMethod.POST)
+
+
+
     public Profile login ( final User user,  ProfileForm profileForm ) throws UnauthorizedException {
-        return new Profile("id", "id","id");
+
+        String userId = user.getId();
+        String name = profileForm.getProfileName();
+        Profile profile = ofy().load().key(Key.create(Profile.class,userId)).now();
+        if ( profile == null ){
+            profile = new Profile(userId, "default", user.getEmail());
+        } else {
+            if (name  != null) profile.update(name);
+        }
+
+        return profile;
     }
 
+    /**
+     *      Start page... ->  Logged User -
+     *
+     *
+     * @param user
+     * @param profileForm
+     * @return
+     */
 
-
+    @ApiMethod (name = "register", path = "",httpMethod = "")
+    public Profile register ( final User user, ProfileForm profileForm ){
+        String userId = user.getId();
+        String name = profileForm.getProfileName();
+        Profile profile = ofy().load().key(Key.create(Profile.class,userId)).now();
+        if ( profile == null ){
+            profile = new Profile(userId, "default", user.getEmail());
+        } else {
+            if (name  != null) profile.update(name);
+        }
+        return profile;
+    }
 }
+
+
+
+
+
+
